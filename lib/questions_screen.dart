@@ -9,7 +9,7 @@ class QuestionsScreen extends StatefulWidget {
     super.key,
     required this.onSelectAnswer,
   });
-
+  //有状态组件从父组件获取有参函数地址的方法
   final void Function(String answer) onSelectAnswer;
 
   @override
@@ -22,9 +22,9 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
   var currentQuestionIndex = 0;
 
   void answerQuestion(String selectedAnswer) {
+    //在有状态组件的Widget类里获取父组件地址后，通过State类里的widget直接调用
+    //这里的widget是内置用法，类似于this
     widget.onSelectAnswer(selectedAnswer);
-    // currentQuestionIndex = currentQuestionIndex + 1;
-    // currentQuestionIndex += 1;
     setState(() {
       currentQuestionIndex++; // increments the value by 1
     });
@@ -52,6 +52,8 @@ class _QuestionsScreenState extends State<QuestionsScreen> {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            //这是一个常用写法，通过扩展操作符和map函数将List列表里的元素用小组件展现出来
+            //使用扩展操作符（...）将一个 List 中的所有元素插入到另一个 List 中
             ...currentQuestion.shuffledAnswers.map((answer) {
               return AnswerButton(
                 answerText: answer,
